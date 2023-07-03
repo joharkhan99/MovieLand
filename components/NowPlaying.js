@@ -108,17 +108,12 @@ const NowPlaying = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <View
-      style={[
-        styles.itemContainer,
-        { width: 150, borderColor: "white", borderWidth: 3 },
-      ]}
-    >
+    <View style={[styles.itemContainer]}>
       <Image
         source={{ uri: "https://image.tmdb.org/t/p/w500" + item.poster_path }}
         style={styles.image}
       />
-      <Text style={styles.movieTitle}>{item.title}</Text>
+      {/* <Text style={styles.movieTitle}>{item.title}</Text> */}
     </View>
   );
 
@@ -128,7 +123,12 @@ const NowPlaying = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Now Playing</Text>
+      <View style={styles.flex}>
+        <Text style={styles.title}>Now Playing</Text>
+        <TouchableOpacity style={styles.linkBtn}>
+          <Text style={styles.linkText}>See all</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={movies}
@@ -136,10 +136,7 @@ const NowPlaying = () => {
         keyExtractor={(item) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        // snapToAlignment="start"
-        // snapToInterval={width - 32}
         decelerationRate="fast"
-        contentContainerStyle={styles.container}
       />
     </View>
   );
@@ -149,39 +146,26 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "transparent",
     paddingVertical: 10,
-  },
-  categoriesList: {
     paddingHorizontal: 20,
-  },
-  categoryContainer: {
-    alignItems: "center",
-    marginRight: 10,
-    backgroundColor: "#1E202A",
-    paddingVertical: 0,
-    borderRadius: 5,
-    paddingBottom: 7,
-    paddingHorizontal: 0,
-    width: 100,
-  },
-  emoji: {
-    fontSize: 30,
-    marginBottom: 10,
-  },
-  categoryName: {
-    fontSize: 13,
-    color: "#7D7C7B",
-    fontWeight: 500,
+    marginTop: 10,
   },
   title: {
     color: "#DDD",
     fontSize: 17,
     fontWeight: 700,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+  },
+  flex: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    marginBottom: 15,
+  },
+  linkText: {
+    color: "#7D7C7B",
   },
   itemContainer: {
-    paddingHorizontal: 8,
+    marginRight: 15,
     alignItems: "center",
+    width: 150,
   },
   image: {
     width: "100%",

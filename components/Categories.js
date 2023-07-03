@@ -89,8 +89,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "transparent",
     paddingVertical: 10,
-  },
-  categoriesList: {
     paddingHorizontal: 20,
   },
   categoryContainer: {
@@ -100,7 +98,6 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     borderRadius: 5,
     paddingBottom: 7,
-    paddingHorizontal: 0,
     width: 100,
   },
   emoji: {
@@ -109,14 +106,13 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 13,
-    color: "#7D7C7B",
+    color: "#ddd",
     fontWeight: 500,
   },
   title: {
     color: "#DDD",
     fontSize: 17,
     fontWeight: 700,
-    paddingHorizontal: 20,
     paddingBottom: 20,
   },
 });

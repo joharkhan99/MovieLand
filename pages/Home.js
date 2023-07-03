@@ -8,9 +8,7 @@ import {
 } from "react-native";
 import Movies from "../pages/Movies";
 import Series from "../pages/Series";
-import { SafeAreaView } from "react-native";
 import Categories from "../components/Categories";
-import NowPlaying from "../components/NowPlaying";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("Movies");
@@ -50,11 +48,8 @@ function Home() {
         </TouchableOpacity>
       </View>
 
-      <Categories />
-
-      <NowPlaying />
-
       <ScrollView>
+        <Categories />
         {activeTab === "Movies" ? <Movies /> : <Series />}
       </ScrollView>
     </View>
