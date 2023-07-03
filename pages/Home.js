@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import Movies from "../pages/Movies";
 import Series from "../pages/Series";
-import Categories from "../components/Categories";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("Movies");
@@ -49,7 +48,6 @@ function Home() {
       </View>
 
       <ScrollView>
-        <Categories />
         {activeTab === "Movies" ? <Movies /> : <Series />}
       </ScrollView>
     </View>
@@ -61,11 +59,11 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0E101C",
+    backgroundColor: "#0D1117",
   },
   tabsContainer: {
     flexDirection: "row",
-    backgroundColor: "#0E101C",
+    backgroundColor: "#0D1117",
     paddingVertical: 10,
     marginTop: 20,
     justifyContent: "flex-start",

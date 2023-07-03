@@ -99,6 +99,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingBottom: 7,
     width: 100,
+
+    shadowColor: "#0D1117",
+    elevation: 20,
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
   },
   emoji: {
     fontSize: 30,
