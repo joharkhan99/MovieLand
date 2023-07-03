@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -25,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "API_KEY": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYTUyYzMxODYxYmRmMjYwMzc1YzU3ZDcxODIzOTQ2YyIsInN1YiI6IjY0YTEzNWFmNGE1MmY4MDBhZjEyODUzMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.k88OvyPmHTMWF39nx0vFA3y79Oy0Kq4_qu8q8afxS10"
     }
   }
 }

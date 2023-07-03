@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,112 +6,60 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import Constants from "expo-constants";
 
 const Categories = () => {
-  const categories = [
-    {
-      id: 28,
-      name: "Action",
-      emoji: "😄",
-    },
-    {
-      id: 12,
-      name: "Adventure",
-      emoji: "😃",
-    },
-    {
-      id: 16,
-      name: "Animation",
-      emoji: "😊",
-    },
-    {
-      id: 35,
-      name: "Comedy",
-      emoji: "😆",
-    },
-    {
-      id: 80,
-      name: "Crime",
-      emoji: "😎",
-    },
-    {
-      id: 99,
-      name: "Documentary",
-      emoji: "📽️",
-    },
-    {
-      id: 18,
-      name: "Drama",
-      emoji: "😢",
-    },
-    {
-      id: 10751,
-      name: "Family",
-      emoji: "👪",
-    },
-    {
-      id: 14,
-      name: "Fantasy",
-      emoji: "🧙‍♂️",
-    },
-    {
-      id: 36,
-      name: "History",
-      emoji: "📜",
-    },
-    {
-      id: 27,
-      name: "Horror",
-      emoji: "👻",
-    },
-    {
-      id: 10402,
-      name: "Music",
-      emoji: "🎵",
-    },
-    {
-      id: 9648,
-      name: "Mystery",
-      emoji: "🔍",
-    },
-    {
-      id: 10749,
-      name: "Romance",
-      emoji: "💑",
-    },
-    {
-      id: 878,
-      name: "Science Fiction",
-      emoji: "🚀",
-    },
-    {
-      id: 10770,
-      name: "TV Movie",
-      emoji: "📺",
-    },
-    {
-      id: 53,
-      name: "Thriller",
-      emoji: "😱",
-    },
-    {
-      id: 10752,
-      name: "War",
-      emoji: "⚔️",
-    },
-    {
-      id: 37,
-      name: "Western",
-      emoji: "🤠",
-    },
-  ];
+  const [categories, setCategories] = useState([]);
+  const API_KEY = Constants.manifest.extra.API_KEY;
+  const API_URL = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+
+  const emojies = {
+    Action: "😄",
+    Adventure: "😃",
+    Animation: "😊",
+    Comedy: "😆",
+    Crime: "😎",
+    Documentary: "📽️",
+    Drama: "😢",
+    Family: "👪",
+    Fantasy: "🧙‍♂️",
+    History: "📜",
+    Horror: "👻",
+    Music: "🎵",
+    Mystery: "🔍",
+    Romance: "💑",
+    "Science Fiction": "🚀",
+    "TV Movie": "📺",
+    Thriller: "😱",
+    War: "⚔️",
+    Western: "🤠",
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${API_KEY}`,
+          },
+        });
+        const data = await response.json();
+        setCategories(data.genres);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+
+    // fetchData();
+  }, []);
 
   const renderCategory = ({ item }) => (
     <TouchableOpacity
       style={styles.categoryContainer}
       onPress={() => handleCategoryPress(item)}
     >
-      <Text style={styles.emoji}>{item.emoji}</Text>
+      <Text style={styles.emoji}>{emojies[item.name]}</Text>
       <Text style={styles.categoryName}>{item.name}</Text>
     </TouchableOpacity>
   );

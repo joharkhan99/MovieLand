@@ -10,6 +10,7 @@ import Movies from "../pages/Movies";
 import Series from "../pages/Series";
 import { SafeAreaView } from "react-native";
 import Categories from "../components/Categories";
+import NowPlaying from "../components/NowPlaying";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("Movies");
@@ -50,6 +51,8 @@ function Home() {
       </View>
 
       <Categories />
+
+      <NowPlaying />
 
       <ScrollView>
         {activeTab === "Movies" ? <Movies /> : <Series />}
