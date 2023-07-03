@@ -8,7 +8,10 @@ const Stack = createStackNavigator();
 
 const StackNavigator = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="Welcome" headerMode="none">
+    <Stack.Navigator
+      initialRouteName="Welcome"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Main" component={TabNavigator} />
     </Stack.Navigator>

@@ -9,19 +9,22 @@ import {
 
 function Welcome({ navigation }) {
   const handleGetStarted = () => {
-    // navigation.navigate("Main");
+    navigation.navigate("Main");
   };
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/icon.png")} // Add your background image source here
+        source={require("../assets/welcome.jpg")} // Add your background image source here
         style={styles.backgroundImage}
       >
         <View style={styles.overlay} />
 
         <View style={styles.content}>
-          <Text style={styles.title}>Welcome</Text>
+          <Text style={styles.title}>Welcome to Movieland</Text>
+          <Text style={styles.paragraph}>
+            The best platform to watch free movies and enjoy great time!
+          </Text>
           <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
             <Text style={styles.buttonText}>Get Started</Text>
           </TouchableOpacity>
@@ -44,15 +47,17 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Add your desired overlay opacity here
+    backgroundColor: "rgba(0, 0, 0, 0.7)", // Add your desired overlay opacity here
   },
   content: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    marginBottom: 100,
+    padding: 20,
   },
   title: {
-    fontSize: 40,
+    fontSize: 25,
     color: "white",
     marginBottom: 20,
   },
@@ -61,9 +66,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
+    width: "100%",
+    marginTop: 40,
   },
   buttonText: {
     color: "white",
     fontSize: 18,
+    textAlign: "center",
+  },
+  paragraph: {
+    color: "#ccc",
+    textAlign: "center",
   },
 });
