@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
+import { useFonts } from "expo-font";
 
 function Welcome({ navigation }) {
   const handleGetStarted = () => {
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "white",
     marginBottom: 20,
+    fontWeight: 700,
   },
   button: {
     backgroundColor: "#E11A38",
@@ -68,11 +70,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: "100%",
     marginTop: 40,
+    shadowColor: "#E11A38",
+    elevation: 20,
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
   },
   buttonText: {
     color: "white",
     fontSize: 18,
     textAlign: "center",
+    fontWeight: 700,
   },
   paragraph: {
     color: "#ccc",
