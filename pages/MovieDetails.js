@@ -129,6 +129,10 @@ function MovieDetails() {
     navigation.goBack();
   };
 
+  const watch = (id) => {
+    navigation.navigate("Watch", { movie_id: id });
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -186,7 +190,11 @@ function MovieDetails() {
             <Feather name="bookmark" size={22} color={"#DDD"} />
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.largeButton}>
+
+        <TouchableOpacity
+          style={styles.largeButton}
+          onPress={() => watch(movie_id)}
+        >
           <Text style={{ fontWeight: 700, color: "#DDD" }}>Play Now</Text>
         </TouchableOpacity>
       </View>
