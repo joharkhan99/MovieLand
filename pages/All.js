@@ -53,7 +53,7 @@ function All() {
     case "Category":
       const { cat_name, cat_id } = route.params;
       title = `${cat_name} Movies`;
-      STORAGE_KEY = "CategoryMovies";
+      STORAGE_KEY = cat_name;
       API_URL = `https://api.themoviedb.org/3/discover/movie?with_genres=${cat_id}`;
       break;
     default:
