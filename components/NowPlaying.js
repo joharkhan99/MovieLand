@@ -10,11 +10,13 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const STORAGE_KEY = "NowPlayingMovies";
 
 const NowPlaying = () => {
   const [movies, setMovies] = useState([]);
+  const navigation = useNavigation();
 
   const API_KEY = Constants.manifest.extra.API_KEY;
   const API_URL =
@@ -50,9 +52,7 @@ const NowPlaying = () => {
   const renderItem = ({ item }) => (
     <View style={[styles.itemContainer]}>
       <TouchableOpacity
-        onPress={() => {
-          console.log("Clicked");
-        }}
+        onPress={() => movieDetails(item.id)}
         style={{ width: "100%", height: "100%" }}
         activeOpacity={0.7}
       >
@@ -63,6 +63,10 @@ const NowPlaying = () => {
       </TouchableOpacity>
     </View>
   );
+
+  const movieDetails = (id) => {
+    navigation.navigate("MovieDetails", { movie_id: id });
+  };
 
   return (
     <View style={styles.container}>
