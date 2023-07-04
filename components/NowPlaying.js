@@ -49,11 +49,18 @@ const NowPlaying = () => {
 
   const renderItem = ({ item }) => (
     <View style={[styles.itemContainer]}>
-      <Image
-        source={{ uri: "https://image.tmdb.org/t/p/w500" + item.poster_path }}
-        style={styles.image}
-      />
-      {/* <Text style={styles.movieTitle}>{item.title}</Text> */}
+      <TouchableOpacity
+        onPress={() => {
+          console.log("Clicked");
+        }}
+        style={{ width: "100%", height: "100%" }}
+        activeOpacity={0.7}
+      >
+        <Image
+          source={{ uri: "https://image.tmdb.org/t/p/w500" + item.poster_path }}
+          style={styles.image}
+        />
+      </TouchableOpacity>
     </View>
   );
 
