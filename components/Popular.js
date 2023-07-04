@@ -10,11 +10,13 @@ import Constants from "expo-constants";
 import { Image } from "react-native";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const STORAGE_KEY = "PopularMovies";
 
 const Popular = () => {
   const [movies, setMovies] = useState([]);
+  const navigation = useNavigation();
 
   const API_KEY = Constants.manifest.extra.API_KEY;
   const API_URL =
@@ -47,18 +49,24 @@ const Popular = () => {
     fetchData();
   }, []);
 
+  const movieDetails = (id) => {
+    navigation.navigate("MovieDetails", { movie_id: id });
+  };
+
   const renderItem = ({ item }) => (
     <View style={[styles.itemContainer]}>
-      <Image
-        source={{ uri: "https://image.tmdb.org/t/p/w500" + item.poster_path }}
-        style={styles.image}
-      />
+      <TouchableOpacity
+        onPress={() => movieDetails(item.id)}
+        style={{ width: "100%", height: "100%" }}
+        activeOpacity={0.7}
+      >
+        <Image
+          source={{ uri: "https://image.tmdb.org/t/p/w500" + item.poster_path }}
+          style={styles.image}
+        />
+      </TouchableOpacity>
     </View>
   );
-
-  const handleCategoryPress = (category) => {
-    console.log("Category pressed:", category.name);
-  };
 
   return (
     <View style={styles.container}>
@@ -87,6 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginTop: 10,
+    flex: 1,
   },
   title: {
     color: "#DDD",

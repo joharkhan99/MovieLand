@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, Image, Dimensions } from "react-native";
+import {
+  View,
+  FlatList,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
 const Trending = () => {
   const flatListRef = React.useRef(null);
-
+  const navigation = useNavigation();
   const [movies, setMovies] = useState([]);
+
+  const movieDetails = (id) => {
+    navigation.navigate("MovieDetails", { movie_id: id });
+  };
 
   const API_KEY = Constants.manifest.extra.API_KEY;
   const API_URL =
@@ -78,17 +89,23 @@ const Trending = () => {
           },
         }}
       >
-        <Image
-          source={{
-            uri: "https://image.tmdb.org/t/p/w500" + item.poster_path,
-          }}
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: 8,
-          }}
-          resizeMode="center"
-        />
+        <TouchableOpacity
+          onPress={() => movieDetails(item.id)}
+          style={{ width: "100%", height: "100%" }}
+          activeOpacity={0.7}
+        >
+          <Image
+            source={{
+              uri: "https://image.tmdb.org/t/p/w500" + item.poster_path,
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              borderRadius: 8,
+            }}
+            resizeMode="center"
+          />
+        </TouchableOpacity>
       </View>
     );
   };

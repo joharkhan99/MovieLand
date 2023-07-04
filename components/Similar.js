@@ -34,8 +34,8 @@ const Similar = ({ movie_id }) => {
       }
     };
 
-    // fetchData();
-  }, []);
+    fetchData();
+  }, [movie_id]);
 
   const renderItem = ({ item }) => (
     <View style={[styles.itemContainer]}>

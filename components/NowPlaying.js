@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginTop: 10,
+    flex: 1,
   },
   title: {
     color: "#DDD",

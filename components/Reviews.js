@@ -20,7 +20,7 @@ function Reviews({ movie_id }) {
         });
         const data = await response.json();
         setReviews(data.results);
-        console.log(data.results);
+        // console.log(data.results);
       } catch (error) {
         console.error("Error:", error.message);
       }
@@ -29,11 +29,21 @@ function Reviews({ movie_id }) {
     fetchData();
   }, [movie_id]);
 
+  // const getAvatarSource = (avatarPath) => {
+  //   if (avatarPath.startsWith("/https://")) {
+  //     return { uri: avatarPath.replace("/https://", "https://") };
+  //   } else {
+  //     return { uri: "https://image.tmdb.org/t/p/w500" + avatarPath };
+  //   }
+  // };
+
   const getAvatarSource = (avatarPath) => {
-    if (avatarPath.startsWith("/https://")) {
+    if (avatarPath && avatarPath.startsWith("/https://")) {
       return { uri: avatarPath.replace("/https://", "https://") };
-    } else {
+    } else if (avatarPath) {
       return { uri: "https://image.tmdb.org/t/p/w500" + avatarPath };
+    } else {
+      return { uri: avatarPath };
     }
   };
 
@@ -63,7 +73,9 @@ function Reviews({ movie_id }) {
               <View style={styles.ratingContainer}>
                 <FontAwesome name="star" size={15} color="#F7CC49" />
                 <Text style={styles.averageRating}>
-                  {review.author_details.rating.toFixed(1)}
+                  {review.author_details.rating
+                    ? review.author_details.rating.toFixed(1)
+                    : "-"}
                 </Text>
               </View>
             </View>
@@ -98,6 +110,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    backgroundColor: "#1E202A",
   },
   reviewContent: {
     marginLeft: 10,
