@@ -68,11 +68,15 @@ const NowPlaying = () => {
     navigation.navigate("MovieDetails", { movie_id: id });
   };
 
+  const All = () => {
+    navigation.navigate("All", { type: "NowPlaying" });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.flex}>
         <Text style={styles.title}>Now Playing</Text>
-        <TouchableOpacity style={styles.linkBtn}>
+        <TouchableOpacity style={styles.linkBtn} onPress={() => All()}>
           <Text style={styles.linkText}>See all</Text>
         </TouchableOpacity>
       </View>

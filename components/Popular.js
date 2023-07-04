@@ -53,6 +53,10 @@ const Popular = () => {
     navigation.navigate("MovieDetails", { movie_id: id });
   };
 
+  const All = () => {
+    navigation.navigate("All", { type: "Popular" });
+  };
+
   const renderItem = ({ item }) => (
     <View style={[styles.itemContainer]}>
       <TouchableOpacity
@@ -72,7 +76,7 @@ const Popular = () => {
     <View style={styles.container}>
       <View style={styles.flex}>
         <Text style={styles.title}>Popular</Text>
-        <TouchableOpacity style={styles.linkBtn}>
+        <TouchableOpacity style={styles.linkBtn} onPress={() => All()}>
           <Text style={styles.linkText}>See all</Text>
         </TouchableOpacity>
       </View>
