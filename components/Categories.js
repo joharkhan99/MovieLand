@@ -7,9 +7,11 @@ import {
   FlatList,
 } from "react-native";
 import Constants from "expo-constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+
   const API_KEY = Constants.manifest.extra.API_KEY;
   const API_URL = "https://api.themoviedb.org/3/genre/movie/list?language=en";
 
@@ -38,21 +40,47 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(API_URL, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-          },
-        });
-        const data = await response.json();
-        setCategories(data.genres);
+        const cachedCategories = await getCachedCategories();
+
+        if (cachedCategories) {
+          setCategories(cachedCategories);
+        } else {
+          const response = await fetch(API_URL, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${API_KEY}`,
+            },
+          });
+          const data = await response.json();
+          const fetchedCategories = data.genres;
+          setCategories(fetchedCategories);
+          cacheCategories(fetchedCategories);
+        }
       } catch (error) {
         console.error("Error:", error.message);
       }
     };
 
-    // fetchData();
+    fetchData();
   }, []);
+
+  const getCachedCategories = async () => {
+    try {
+      const cachedData = await AsyncStorage.getItem("categories");
+      return cachedData ? JSON.parse(cachedData) : null;
+    } catch (error) {
+      console.error("Error retrieving cached categories:", error);
+      return null;
+    }
+  };
+
+  const cacheCategories = async (categories) => {
+    try {
+      await AsyncStorage.setItem("categories", JSON.stringify(categories));
+    } catch (error) {
+      console.error("Error caching categories:", error);
+    }
+  };
 
   const renderCategory = ({ item }) => (
     <TouchableOpacity
@@ -99,7 +127,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingBottom: 7,
     width: 100,
-
     shadowColor: "#0D1117",
     elevation: 20,
     shadowOpacity: 0.5,
@@ -116,12 +143,12 @@ const styles = StyleSheet.create({
   categoryName: {
     fontSize: 13,
     color: "#ddd",
-    fontWeight: 500,
+    fontWeight: "500",
   },
   title: {
     color: "#DDD",
     fontSize: 17,
-    fontWeight: 700,
+    fontWeight: "700",
     paddingBottom: 20,
   },
 });
