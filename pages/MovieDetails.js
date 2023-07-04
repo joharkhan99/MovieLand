@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -9,14 +9,15 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
 import Reviews from "../components/Reviews";
+import Similar from "../components/Similar";
+import Constants from "expo-constants";
 
 function MovieDetails() {
   const navigation = useNavigation();
   const route = useRoute();
   const { movie_id } = route.params;
-  console.log(movie_id);
 
   const [details, setDetails] = useState({
     adult: false,
@@ -102,55 +103,27 @@ function MovieDetails() {
     vote_count: 5346,
   });
 
-  const [reviews, setReviews] = useState([
-    {
-      author: "Chris Sawin",
-      author_details: {
-        name: "Chris Sawin",
-        username: "ChrisSawin",
-        avatar_path:
-          "/https://secure.gravatar.com/avatar/bf3b87ecb40599290d764e6d73c86319.jpg",
-        rating: 5,
-      },
-      content:
-        "_The Super Mario Bros. Movie_ is like Fruit Stripe Gum. It’s super colorful and eyecatching, but it seems to instantly lose its flavor and charm. The film is visually stunning and Jack Black is outstanding as Bowser. The big action sequences are like big budget versions of the Mario video games playthroughs with little welcome surprises thrown in.\r\n\r\nBut the film is massively unfunny, the characters are extremely flat, and the flimsy writing is about as complex as an unkempt mustache.\r\n\r\n**Full review:** https://boundingintocomics.com/2023/04/06/the-super-mario-bros-movie-review-plunging-rainbow-colored-nostalgia-to-death/",
-      created_at: "2023-04-06T20:38:59.988Z",
-      id: "642f2de32588230098248468",
-      updated_at: "2023-04-06T20:39:00.115Z",
-      url: "https://www.themoviedb.org/review/642f2de32588230098248468",
-    },
-    {
-      author: "CinemaSerf",
-      author_details: {
-        name: "CinemaSerf",
-        username: "Geronimo1967",
-        avatar_path: "/1kks3YnVkpyQxzw36CObFPvhL5f.jpg",
-        rating: 6,
-      },
-      content:
-        'I am not the demographic and to be honest this isn\'t really a film that I was ever going to like either. The story is beyond simple and the game-based animation - though expertly crafted - did absolutely nothing for me as ninety minutes rolled along devoid of characterisations, thrill or much sense of adventure. I got the feeling this was really an outing for "Mario", "Luigi" and "Peach" designed to satisfy the die-hard fans, or the children - or both, but if you were not in on the game from the start then you are unlikely to have become any more engaged by the end of this fungi-fest. It wouldn\'t be fair to say this is bland - it\'s not designed to challenge or take risks: it\'s fun for those who grew up with "Mario" et al in their lives and I\'m not going to decry that. It\'s colourful, pacy, and at times quite well written but perhaps it ought to have a rating that says if you are over 12 then you should be advised against it?',
-      created_at: "2023-04-13T13:19:08.627Z",
-      id: "6438014c1d538600f40f4d4e",
-      updated_at: "2023-04-13T13:19:08.722Z",
-      url: "https://www.themoviedb.org/review/6438014c1d538600f40f4d4e",
-    },
-    {
-      author: "MSB",
-      author_details: {
-        name: "MSB",
-        username: "msbreviews",
-        avatar_path:
-          "/https://secure.gravatar.com/avatar/992eef352126a53d7e141bf9e8707576.jpg",
-        rating: 8,
-      },
-      content:
-        "FULL SPOILER-FREE REVIEW @ https://www.firstshowing.net/2023/review-illuminations-super-mario-bros-movie-left-a-me-so-happy/\r\n\r\n\"The Super Mario Bros. Movie delivers everything I wanted. Packed with fantastic references that will warm the hearts of those who lived and still live with Nintendo and Mario up close. Along with energetic action, dazzling animation and world-building, and iconic music – Brian Tyler's score goes straight into my Spotify playlist. Mario and Co. marked my childhood, and, still today, continue to offer me wonderful memories for life. As a viewer clearly belonging to the target audience, I couldn't have left the cinema more joyful. Ya-hoo!\"\r\n\r\nRating: A-",
-      created_at: "2023-04-14T18:36:26.281Z",
-      id: "64399d2a7ef3810522626d9c",
-      updated_at: "2023-04-14T18:36:26.428Z",
-      url: "https://www.themoviedb.org/review/64399d2a7ef3810522626d9c",
-    },
-  ]);
+  const API_KEY = Constants.manifest.extra.API_KEY;
+  const API_URL = `https://api.themoviedb.org/3/movie/${movie_id}?language=en-US`;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${API_KEY}`,
+          },
+        });
+        const data = await response.json();
+        setDetails(data);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [movie_id]);
 
   const handleBack = () => {
     navigation.goBack();
@@ -202,15 +175,19 @@ function MovieDetails() {
           <Text style={styles.previewDescription}>{details.overview}</Text>
         </View>
 
-        <Reviews reviews={reviews} />
+        <Similar movie_id={movie_id} />
+
+        <Reviews movie_id={movie_id} />
       </ScrollView>
 
-      <View style={styles.tabsContainer}>
-        <TouchableOpacity style={[styles.tab, styles.activeTab]}>
-          <Text style={[styles.tabText, styles.activeTabText]}>Save</Text>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.smallButton}>
+          <Text>
+            <Feather name="bookmark" size={22} color={"#DDD"} />
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.tab]}>
-          <Text style={[styles.tabText]}>Play Now</Text>
+        <TouchableOpacity style={styles.largeButton}>
+          <Text style={{ fontWeight: 700, color: "#DDD" }}>Play Now</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -218,6 +195,30 @@ function MovieDetails() {
 }
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "space-between",
+    marginBottom: 20,
+    padding: 0,
+    gap: 15,
+    paddingHorizontal: 20,
+  },
+  smallButton: {
+    width: 50,
+    alignItems: "center",
+    backgroundColor: "#1E202A",
+    borderRadius: 5,
+    paddingVertical: 10,
+  },
+  largeButton: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#E11A38",
+    borderRadius: 5,
+    paddingVertical: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: "#0D1117",
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
   },
   posterImage: {
     width: "100%",
-    height: 300,
+    height: 250,
     resizeMode: "cover",
     // borderRadius: 8,
   },
@@ -295,31 +296,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     marginTop: 20,
-  },
-  tabsContainer: {
-    flexDirection: "row",
-    backgroundColor: "#0D1117",
-    paddingVertical: 10,
-    marginTop: 20,
-    justifyContent: "flex-start",
-    gap: 30,
-    paddingHorizontal: 20,
-  },
-  tab: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "transparent",
-  },
-  activeTab: {},
-  tabText: {
-    color: "#7D7C7B",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  activeTabText: {
-    color: "#FBEC33",
   },
 });
 

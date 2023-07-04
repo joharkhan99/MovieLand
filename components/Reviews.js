@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import Constants from "expo-constants";
 
-function Reviews({ reviews }) {
+function Reviews({ movie_id }) {
+  const [reviews, setReviews] = useState([]);
+
+  const API_KEY = Constants.manifest.extra.API_KEY;
+  const API_URL = `https://api.themoviedb.org/3/movie/${movie_id}/reviews?language=en-US&page=1`;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${API_KEY}`,
+          },
+        });
+        const data = await response.json();
+        setReviews(data.results);
+        console.log(data.results);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+
+    fetchData();
+  }, [movie_id]);
+
   const getAvatarSource = (avatarPath) => {
     if (avatarPath.startsWith("/https://")) {
       return { uri: avatarPath.replace("/https://", "https://") };
