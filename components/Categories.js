@@ -8,10 +8,11 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-
+  const navigation = useNavigation();
   const API_KEY = Constants.manifest.extra.API_KEY;
   const API_URL = "https://api.themoviedb.org/3/genre/movie/list?language=en";
 
@@ -93,7 +94,11 @@ const Categories = () => {
   );
 
   const handleCategoryPress = (category) => {
-    console.log("Category pressed:", category.name);
+    navigation.navigate("All", {
+      type: "Category",
+      cat_name: category.name,
+      cat_id: category.id,
+    });
   };
 
   return (

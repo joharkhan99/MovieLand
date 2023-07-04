@@ -8,6 +8,7 @@ import {
   Text,
   FlatList,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import Constants from "expo-constants";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -22,27 +23,38 @@ function All() {
   const API_KEY = Constants.manifest.extra.API_KEY;
   var STORAGE_KEY = "";
   var API_URL = "";
+  var title = "";
 
   switch (type) {
     case "NowPlaying":
+      title = "Now Playing Movies";
       STORAGE_KEY = "NowPlayingMovies";
       API_URL =
         "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
       break;
     case "Popular":
+      title = "Popular Movies";
       STORAGE_KEY = "PopularMovies";
       API_URL =
         "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
       break;
     case "TopRated":
+      title = "Top Rated Movies";
       STORAGE_KEY = "TopRatedMovies";
       API_URL =
         "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
       break;
     case "Upcoming":
+      title = "Upcoming Movies";
       STORAGE_KEY = "UpcomingMovies";
       API_URL =
         "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+      break;
+    case "Category":
+      const { cat_name, cat_id } = route.params;
+      title = `${cat_name} Movies`;
+      STORAGE_KEY = "CategoryMovies";
+      API_URL = `https://api.themoviedb.org/3/discover/movie?with_genres=${cat_id}`;
       break;
     default:
       break;
@@ -75,25 +87,34 @@ function All() {
 
   const renderMovieItem = ({ item }) => (
     <View style={styles.movieContainer}>
-      <Image
-        source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
-        style={styles.movieImage}
-      />
-      <View style={styles.absolute}>
-        <Text style={styles.movieTitle}>{item.title}</Text>
+      <TouchableOpacity
+        onPress={() => movieDetails(item.id)}
+        activeOpacity={0.7}
+      >
+        <Image
+          source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+          style={styles.movieImage}
+        />
+        <View style={styles.absolute}>
+          <Text style={styles.movieTitle}>{item.title}</Text>
 
-        <View style={styles.ratingContainer}>
-          <FontAwesome name="star" size={16} color="#F7CC49" />
-          <Text style={styles.averageRating}>
-            {item.vote_average.toFixed(1)}/10
-          </Text>
+          <View style={styles.ratingContainer}>
+            <FontAwesome name="star" size={16} color="#F7CC49" />
+            <Text style={styles.averageRating}>
+              {item.vote_average.toFixed(1)}/10
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 
   const handleBack = () => {
     navigation.goBack();
+  };
+
+  const movieDetails = (id) => {
+    navigation.navigate("MovieDetails", { movie_id: id });
   };
 
   return (
@@ -104,7 +125,7 @@ function All() {
             <Ionicons name="arrow-back-sharp" size={20} color="#DDD" />
           </View>
         </TouchableWithoutFeedback>
-        <Text style={styles.title}>Now Playing</Text>
+        <Text style={styles.title}>{title}</Text>
       </View>
 
       <FlatList
@@ -158,7 +179,7 @@ const styles = StyleSheet.create({
   },
   movieContainer: {
     flex: 1,
-    margin: 5,
+    margin: 10,
     marginHorizontal: 10,
     marginLeft: 5,
     borderRadius: 10,
