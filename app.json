@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "MovieLand",
+    "slug": "MovieLand",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#EE3523"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#EE3523"
+      },
+      "package": "com.joharkhan051.MovieLand"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "API_KEY": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYTUyYzMxODYxYmRmMjYwMzc1YzU3ZDcxODIzOTQ2YyIsInN1YiI6IjY0YTEzNWFmNGE1MmY4MDBhZjEyODUzMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.k88OvyPmHTMWF39nx0vFA3y79Oy0Kq4_qu8q8afxS10",
+      "eas": {
+        "projectId": "94638d06-1748-4413-b72b-4f8c7e66c036"
+      }
+    }
+  }
+}
