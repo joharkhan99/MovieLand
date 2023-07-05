@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0D1117",
     padding: 20,
+    paddingTop: 40,
   },
   movieContainer: {
     flex: 1,

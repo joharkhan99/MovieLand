@@ -7,12 +7,14 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
 import Reviews from "../components/Reviews";
 import Similar from "../components/Similar";
 import Constants from "expo-constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function MovieDetails() {
   const navigation = useNavigation();
@@ -133,6 +135,21 @@ function MovieDetails() {
     navigation.navigate("Watch", { movie_id: id });
   };
 
+  const saveMovie = async () => {
+    try {
+      const existingSavedMovie = await AsyncStorage.getItem("savedMovies");
+      const savedMoviesArray = existingSavedMovie
+        ? JSON.parse(existingSavedMovie)
+        : [];
+      savedMoviesArray.push(details);
+      const updatedSavedMovies = JSON.stringify(savedMoviesArray);
+      await AsyncStorage.setItem("savedMovies", updatedSavedMovies);
+      Alert.alert("Movie Saved!");
+    } catch (error) {
+      console.error("Error saving movie details:", error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -185,7 +202,7 @@ function MovieDetails() {
       </ScrollView>
 
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.smallButton}>
+        <TouchableOpacity style={styles.smallButton} onPress={saveMovie}>
           <Text>
             <Feather name="bookmark" size={22} color={"#DDD"} />
           </Text>
