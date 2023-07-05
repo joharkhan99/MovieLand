@@ -11,41 +11,13 @@ import All from "../pages/All";
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
-  const [isWelcomeShown, setIsWelcomeShown] = useState(false);
-
-  useEffect(() => {
-    checkWelcomeStatus();
-  }, []);
-
-  const checkWelcomeStatus = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@welcome_shown");
-      setIsWelcomeShown(value !== null);
-    } catch (error) {
-      console.error("Error retrieving welcome status:", error.message);
-    }
-  };
-
-  const markWelcomeAsShown = async () => {
-    try {
-      await AsyncStorage.setItem("@welcome_shown", "true");
-      setIsWelcomeShown(true);
-    } catch (error) {
-      console.error("Error saving welcome status:", error.message);
-    }
-  };
-
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isWelcomeShown ? "Main" : "Welcome"}
+        initialRouteName={"Welcome"}
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="Welcome">
-          {(props) => (
-            <Welcome {...props} onWelcomeShown={markWelcomeAsShown} />
-          )}
-        </Stack.Screen>
+        <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="MovieDetails" component={MovieDetails} />
         <Stack.Screen name="Watch" component={Watch} />
