@@ -2,6 +2,10 @@
 
 MovieLand is a captivating movie streaming and discovery app that brings the magic of cinema right to your fingertips. With an extensive collection of movies from various genres, MovieLand offers a seamless and immersive movie-watching experience for users of all ages.
 
+## Play Store Link
+
+[View App](https://play.google.com/store/apps/details?id=com.joharkhan051.MovieLand)
+
 ## Features
 
 - **Explore**: Dive into a vast library of movies, ranging from timeless classics to the latest blockbusters. Discover captivating storytelling and cinematic excellence.
