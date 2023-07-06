@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { useFonts } from "expo-font";
 
 function Welcome({ navigation }) {
   const handleGetStarted = () => {

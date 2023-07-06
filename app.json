@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#EE3523"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -22,7 +20,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#EE3523"
       },
-      "package": "com.joharkhan051.MovieLand"
+      "package": "com.joharkhan051.MovieLand",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import Welcome from "../pages/Welcome";
 import TabNavigator from "./TabNavigator";
 import MovieDetails from "../pages/MovieDetails";
 import Watch from "../pages/Watch";
 import All from "../pages/All";
+import Series from "../pages/Series";
 
 const Stack = createStackNavigator();
 
