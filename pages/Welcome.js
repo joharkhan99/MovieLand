@@ -23,7 +23,8 @@ function Welcome({ navigation }) {
         <View style={styles.content}>
           <Text style={styles.title}>Welcome to Movieland</Text>
           <Text style={styles.paragraph}>
-            The best platform to watch free movies and enjoy great time!
+            Welcome to the ultimate hub for free movies and unforgettable
+            moments.
           </Text>
           <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
             <Text style={styles.buttonText}>Get Started</Text>
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
   paragraph: {
-    color: "#ccc",
+    color: "#ddc",
     textAlign: "center",
   },
 });

@@ -1,13 +1,8 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
 function Watch() {
@@ -16,11 +11,7 @@ function Watch() {
   const { movie_id } = route.params;
   const url = `https://v2.vidsrc.me/embed/${movie_id}`;
 
-  //   <WebView
-  //    source={{html: '<iframe width="100%" height="50%" src="https://v2.vidsrc.me/embed/tt2106476" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'}}
-  //    style={{marginTop: 20}}
-  // />
-
+  const webViewRef = useRef(null);
   const handleBack = () => {
     navigation.goBack();
   };
@@ -47,18 +38,12 @@ function Watch() {
       </TouchableWithoutFeedback>
 
       <WebView
-        source={{
-          html: `<iframe width="100%" height="100%" src="https://v2.vidsrc.me/embed/${movie_id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`,
-        }}
-        style={{
-          padding: 0,
-          margin: 0,
-          width: Dimensions.get("window").width,
-          height: Dimensions.get("window").height,
-        }}
+        ref={webViewRef}
+        source={{ uri: url }}
+        style={{ flex: 1 }}
         allowsFullscreenVideo={true}
-        allowsInlineMediaPlayback={true}
-        scalesPageToFit={true}
+        // javaScriptEnabled={false}
+        // javaScriptCanOpenWindowsAutomatically={false}
       />
     </View>
   );
@@ -68,11 +53,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  loadingIndicator: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   backButton: {
     position: "absolute",
     top: 30,
     left: 20,
-    zIndex: 1,
+    zIndex: 100,
   },
   backIcon: {
     backgroundColor: "rgba(61,63,86,0.8)",
