@@ -4,7 +4,7 @@ MovieLand is a captivating movie streaming and discovery app that brings the mag
 
 ## Play Store Link
 
-[View App](https://play.google.com/store/apps/details?id=com.joharkhan051.MovieLand)
+[View App](https://joharkhan.itch.io/movieland)
 
 ## Features
 
