@@ -1,92 +1,138 @@
-import React from "react";
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import Swiper from "react-native-swiper";
 
-function Welcome({ navigation }) {
-  const handleGetStarted = () => {
-    navigation.navigate("Main");
+const renderWelcomePage = (imageSource, title, paragraph) => (
+  <View style={styles.slide}>
+    <Image source={imageSource} style={styles.image} />
+    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.paragraph}>{paragraph}</Text>
+  </View>
+);
+
+const Welcome = ({ navigation }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleSkip = () => {
+    if (currentIndex < 2) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      navigation.navigate("Main");
+    }
   };
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/welcome.jpg")} // Add your background image source here
-        style={styles.backgroundImage}
-      >
-        <View style={styles.overlay} />
+  const handleNext = () => {
+    if (currentIndex < 2) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      navigation.navigate("Main");
+    }
+  };
 
-        <View style={styles.content}>
-          <Text style={styles.title}>Welcome to Movieland</Text>
-          <Text style={styles.paragraph}>
-            Welcome to the ultimate hub for free movies and unforgettable
-            moments.
+  // const renderWelcomePage = (imageSource, title, paragraph) => (
+  //   <View style={styles.slide}>
+  //     <Image source={imageSource} style={styles.image} />
+  //     <Text style={styles.title}>{title}</Text>
+  //     <Text style={styles.paragraph}>{paragraph}</Text>
+  //   </View>
+  // );
+
+  return (
+    <>
+      <Swiper
+        style={styles.container}
+        loop={false}
+        // showsButtons={false}
+        // showsPagination={false}
+        index={currentIndex}
+      >
+        {renderWelcomePage(
+          require("../assets/welcome.jpg"),
+          "Welcome to Page 1",
+          "This is the first page."
+        )}
+        {renderWelcomePage(
+          require("../assets/welcome.jpg"),
+          "Welcome to Page 2",
+          "This is the second page."
+        )}
+        {renderWelcomePage(
+          require("../assets/welcome.jpg"),
+          "Welcome to Page 3",
+          "This is the last page."
+        )}
+      </Swiper>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleSkip}>
+          <Text style={styles.buttonText}>Skip</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleNext}>
+          <Text style={styles.buttonText}>
+            {currentIndex < 2 ? "Next" : "Get Started"}
           </Text>
-          <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-            <Text style={styles.buttonText}>Get Started</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </View>
+        </TouchableOpacity>
+      </View>
+    </>
   );
-}
+};
 
 export default Welcome;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  wrapper: {},
+  image: {
+    width: 300,
+    height: 300,
+    resizeMode: "contain",
   },
-  backgroundImage: {
+  slide1: {
     flex: 1,
-    resizeMode: "cover",
     justifyContent: "center",
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.7)", // Add your desired overlay opacity here
-  },
-  content: {
-    flex: 1,
     alignItems: "center",
-    justifyContent: "flex-end",
-    marginBottom: 100,
-    padding: 20,
+    backgroundColor: "#9DD6EB",
   },
-  title: {
-    fontSize: 25,
-    color: "white",
-    marginBottom: 20,
-    fontWeight: 700,
+  slide: {
+    // flex: 1,
+    // alignItems: "center",
+    // justifyContent: "center",
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#97CAE5",
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#92BBD9",
+  },
+  text: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  buttonsContainer: {
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginBottom: 40,
+    zIndex: 100,
   },
   button: {
+    zIndex: 100,
     backgroundColor: "#E11A38",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
-    width: "100%",
-    marginTop: 40,
-    shadowColor: "#E11A38",
-    elevation: 20,
-    shadowOpacity: 0.5,
+    width: "45%",
     shadowRadius: 10,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
   },
   buttonText: {
     color: "white",
     fontSize: 18,
     textAlign: "center",
-    fontWeight: 700,
-  },
-  paragraph: {
-    color: "#ddc",
-    textAlign: "center",
+    fontWeight: "700",
   },
 });

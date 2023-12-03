@@ -1,24 +1,20 @@
 {
   "expo": {
-    "name": "MovieLand",
-    "slug": "MovieLand",
+    "name": "Nfluencer",
+    "slug": "Nfluencer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#EE3523"
-    },
+    "splash": {},
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#EE3523"
+        "foregroundImage": "./assets/animation.gif",
+        "backgroundColor": "#fff"
       },
       "package": "com.joharkhan051.MovieLand",
       "versionCode": 3

@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import StackNavigator from "./components/StackNavigator";
-import Series from "./pages/Series";
+import SplashScreen from "./components/SplashScreen";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulating a delay to showcase the loader
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Replace this with your actual loading logic
+    }, 2000);
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#E11A38" />
+        <>
+          <SplashScreen />
+        </>
       ) : (
         <StackNavigator />
       )}
