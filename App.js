@@ -16,7 +16,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#E11A38 " />
+        <ActivityIndicator size="large" color="#E11A38" />
       ) : (
         <StackNavigator />
       )}
